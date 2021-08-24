@@ -107,7 +107,11 @@ function precioFinal () {
     `
   }
 
-  $("tr.th").css (textAling = center)
+  $("#user-table").css({"textAlign": "center", 
+                        "fontSize": "25px",
+                        "marginTop": "40px",
+                        "marginLeft": "10px",
+                        "width": "70%"})
 
 
 
