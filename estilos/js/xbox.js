@@ -1,58 +1,122 @@
-$(document).ready(function(){
 
-    //Selecciono los elementos del dom
-  
-    let formulario = $('.formularioConsultas');
-    let nombreJuego = $('.nombreJuego');
-    let precioJuego = $('.precioJuego');
+
+const iva = 0.21;
+const impPais = 0.08;
+const percepcion = 0.35;
+let precio = $('.precioJuego').val();
+let precioConIva = precio * iva 
+let precioConImpPais = precio * impPais
+let precioConPercepcion = precio * percepcion
+
+function precioFinal () {
+    return (precio + precioConIva + precioConImpPais + precioconPercepcion) 
+}
+
+
 
     
-  
-    //Separo los datos que voy a necesitar
-    function Consulta(nombre, precio) {
-      this.nombre = nombre;
-      this.precio = precio;
+    
+    
+    
+
+
+  let formulario = $('.formularioConsultas');
+  let nombreJuego = $('.nombreJuego');
+  let precioJuego = $('.precioJuego');
+
+  function Consulta(nombre, precio) {
+    this.nombre = nombre;
+    this.precio = precio;
+  }
+
+  let listaConsulta = [];
+
+  if (localStorage.getItem('consultas')) {
+    listaConsulta = JSON.parse(localStorage.getItem('consultas'));
+  }
+
+  function agregarAlStorage(key, consulta) {
+    listaConsulta.push(consulta);
+    localStorage.setItem(key, JSON.stringify(listaConsulta));
+  }
+
+  function obtenerConsultaDeStorage(key) {
+    if(localStorage.getItem(key)){
+      return JSON.parse(localStorage.getItem(key));
     }
-  
-    let listaConsulta = [];
-  
-    //Valido si en el storage hay users si hay asigno mi listUser a los datos del storage
-    if (localStorage.getItem('Consultas')) {
-      listaConsulta = JSON.parse(localStorage.getItem('Consultas'));
+  }
+
+  formulario.submit(function(event) {
+    event.preventDefault();
+
+    let nombre = nombreJuego.val();
+    let precio = precioJuego.val();
+
+    let consulta = new Consulta(nombre, precio);
+
+    if(!localStorage.getItem('consultas')){
+      crearTabla('body', 'user-table');
+      crearHeader(['Nombre', 'Precio'], '#user-table');
     }
-  
-    //Agrego a la lista y guardo en el storage un usuario
-    function saveToStorage(key, consulta) {
-      listaConsulta.push(consulta);
-      localStorage.setItem(key, JSON.stringify(listaConsulta));
-    }
-  
-    //Obtengo los datos del storage
-    function getUserFromStorage(key) {
-      if(localStorage.getItem(key)){
-        return JSON.parse(localStorage.getItem(key));
-      }
-    }
-  
-    //Escucho el evento submit del formulario
-    formulario.submit(function(event) {
-      event.preventDefault();
-  
-      //Obtengo los valores ingresados por el usuario
-      let nombre = nombreJuego.val();
-      let precio = precioJuego.val();
-      
-      
-  
-      let consulta = new Consulta(nombre, precio);
-  
-      
-  
-      //guardo el usuario en localstorage
-      saveToStorage('Consultas', consulta);
-  
-      
+
+    agregarAlStorage('consultas', consulta);
+
+    crearFiladeConsulta(consulta, '#user-table');
+
+  });
+
+  if(localStorage.getItem('consultas')){
+    crearTabla('body', 'user-table');
+    crearHeader(['Nombre','Precio'], '#user-table');
+    filas(obtenerConsultaDeStorage('consultas'), '#user-table');
+  }
+
+
+  function crearTabla(element, nombre) {
+    const table = `<table id=${nombre}></table>`;
+    $(element).append(table);
+  }
+
+  function crearHeader(data, element) { 
+    const header = `<tr>${createDataHeader(data)}</tr>`;
+    $(element).append(header);
+  }
+
+  function createDataHeader(data) {
+    return data.map(headerData => `<th>${headerData}</th>`);
+  }
+
+  function crearFiladeConsulta(consulta, element){
+    const row = `<tr id=tr-${consulta.nombre}>
+      ${populateTableData(consulta.nombre, consulta.precio)}
+    </tr>`;
+    $(element).append(row);
+  }
+
+  function filas(data, element){
+    data.map(consulta => {
+        crearFiladeConsulta(consulta, element);
     });
+  }
+
+
+  function populateTableData(nombre, precio){ 
+    return `
+    <td>${nombre} </td>
+    <td>${precio}</td>
+    `
+  }
+
+  $("tr.th").css (textAling = center)
+
+
+
+
+
+    
+    
+
+
   
-});
+
   

@@ -10,11 +10,13 @@ body {
 h1 {
     text-align: center;
     font-size: 90px;
-    padding-top: 50px;
+    padding-top: 40px;
 }
 
 .plataformasContainer {
-    margin-top: 50px;
+    margin-top: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 img {
@@ -24,4 +26,12 @@ img {
 form {
     font-size: 30px;
     padding-top:20px;
+}
+
+.formularioConsultas {
+    margin-left: 10px;
+}
+
+.volver {
+    margin-left: 10px;
 }
