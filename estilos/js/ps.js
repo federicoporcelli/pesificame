@@ -1,13 +1,13 @@
-const iva = 0.21;
-const impPais = 0.08;
-const percepcion = 0.35;
 
+
+
+const impPais = 0.30;
+const percepcion = 0.35;
 let precio = $('.precioJuego').val();
-let precioConIva = precio * iva 
 let precioConImpPais = precio * impPais
 let precioConPercepcion = precio * percepcion
 
-let precioFinal = function precioFinal () {
+function precioFinal () {
     return (precio + precioConIva + precioConImpPais + precioconPercepcion) 
 }
 
@@ -66,13 +66,6 @@ let precioFinal = function precioFinal () {
   function crearTabla(element, nombre) {
     const table = `<table id=${nombre}></table>`;
     $(element).append(table);
-
-  $('#user-table').css({"textAlign": "center", 
-  "fontSize": "60px",
-  "marginTop": "40px",
-  "marginLeft": "30%",
-  
-  })
   }
 
   function crearHeader(data, element) { 
@@ -113,24 +106,14 @@ $('.ocultarConsultas').click(function(){
   $("#user-table").fadeOut()
 })
 
-$('.borrarConsultas').on('click',function(reload){  
-    localStorage.removeItem(Consultas)
-  })
 
 
-
-
-
+  $("#user-table").css({"textAlign": "center", 
+                        "fontSize": "60px",
+                        "marginTop": "40px",
+                        "marginLeft": "30%",
+                        
+                        })
 
  
 
-
-
-
-    
-    
-
-
-  
-
-  

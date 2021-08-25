@@ -35,3 +35,9 @@ form {
 .volver {
     margin-left: 10px;
 }
+
+.mostrarConsultas {
+    margin-left: 10px;
+    margin-top: 10px;
+    border-top: 1px solid;
+}
