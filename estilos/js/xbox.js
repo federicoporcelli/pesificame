@@ -2,19 +2,25 @@ const iva = 0.21;
 const impPais = 0.08;
 const percepcion = 0.35;
 
-let precio = $('.precioJuego').val();
-let precioConIva = precio * iva 
-let precioConImpPais = precio * impPais
-let precioConPercepcion = precio * percepcion
+let precio;
 
-let precioFinal = function precioFinal () {
-    return (precio + precioConIva + precioConImpPais + precioconPercepcion) 
+$('.precioJuego').on('input', () => {
+  precio = parseInt($('.precioJuego').val());
+})
+
+function precioFinal () {
+  let precioConIva = precio * iva;
+  let precioConPercepcion = precio * percepcion;
+  let precioConImpPais = precio * impPais;
+  let precioTotal = precio + precioConIva + precioConPercepcion; + precioConImpPais;
+  return (precioTotal)
+
 }
 
   let formulario = $('.formularioConsultas');
   let nombreJuego = $('.nombreJuego');
-  let precioJuego = $('.precioJuego');
-
+  let precioJuego = $('.precioJuego') 
+  
   function Consulta(nombre, precio) {
     this.nombre = nombre;
     this.precio = precio;
@@ -39,15 +45,19 @@ let precioFinal = function precioFinal () {
 
   formulario.submit(function(event) {
     event.preventDefault();
+    
+    
+    let nombre =  nombreJuego.val();
+    //let precio = precioJuego.val();
 
-    let nombre = nombreJuego.val();
-    let precio = precioJuego.val();
-
-    let consulta = new Consulta(nombre, precio);
+    const total =  precioFinal()
+    console.log(total);
+    let consulta = new Consulta(nombre, total)
+;
 
     if(!localStorage.getItem('consultas')){
       crearTabla('body', 'user-table');
-      crearHeader(['Nombre', 'Precio'], '#user-table');
+      crearHeader(['Nombre', 'Precio Final'], '#user-table');
     }
 
     agregarAlStorage('consultas', consulta);
@@ -68,11 +78,11 @@ let precioFinal = function precioFinal () {
     $(element).append(table);
 
   $('#user-table').css({"textAlign": "center", 
-  "fontSize": "60px",
-  "marginTop": "40px",
-  "marginLeft": "30%",
-  
-  })
+                        "fontSize": "60px",
+                        "marginTop": "40px",
+                        "marginLeft": "30%",
+                        
+                        })
   }
 
   function crearHeader(data, element) { 
@@ -113,8 +123,8 @@ $('.ocultarConsultas').click(function(){
   $("#user-table").fadeOut()
 })
 
-$('.borrarConsultas').on('click',function(reload){  
-    localStorage.removeItem(Consultas)
+$('.borrarConsultas').on('click',function(key){
+    localStorage.removeItem(consultas)
   })
 
 
