@@ -12,7 +12,7 @@ function precioFinal () {
   let precioConIva = precio * iva;
   let precioConPercepcion = precio * percepcion;
   let precioConImpPais = precio * impPais;
-  let precioTotal = precio + precioConIva + precioConPercepcion; + precioConImpPais;
+  let precioTotal = precio + precioConIva + precioConPercepcion + precioConImpPais;
   return (precioTotal)
 
 }
@@ -28,18 +28,18 @@ function precioFinal () {
 
   let listaConsulta = [];
 
-  if (localStorage.getItem('consultas')) {
-    listaConsulta = JSON.parse(localStorage.getItem('consultas'));
+  if (sessionStorage.getItem('consultas')) {
+    listaConsulta = JSON.parse(sessionStorage.getItem('consultas'));
   }
 
   function agregarAlStorage(key, consulta) {
     listaConsulta.push(consulta);
-    localStorage.setItem(key, JSON.stringify(listaConsulta));
+    sessionStorage.setItem(key, JSON.stringify(listaConsulta));
   }
 
   function obtenerConsultaDeStorage(key) {
-    if(localStorage.getItem(key)){
-      return JSON.parse(localStorage.getItem(key));
+    if(sessionStorage.getItem(key)){
+      return JSON.parse(sessionStorage.getItem(key));
     }
   }
 
@@ -55,7 +55,7 @@ function precioFinal () {
     let consulta = new Consulta(nombre, total)
 ;
 
-    if(!localStorage.getItem('consultas')){
+    if(!sessionStorage.getItem('consultas')){
       crearTabla('body', 'user-table');
       crearHeader(['Nombre', 'Precio Final'], '#user-table');
     }
@@ -66,9 +66,9 @@ function precioFinal () {
 
   });
 
-  if(localStorage.getItem('consultas')){
+  if(sessionStorage.getItem('consultas')){
     crearTabla('body', 'user-table');
-    crearHeader(['Nombre','Precio'], '#user-table');
+    crearHeader(['Nombre','Precio Final'], '#user-table');
     filas(obtenerConsultaDeStorage('consultas'), '#user-table');
   }
 
@@ -123,11 +123,7 @@ $('.ocultarConsultas').click(function(){
   $("#user-table").fadeOut()
 })
 
-$('.borrarConsultas').on('click',function(key){
-    localStorage.removeItem(consultas)
-  })
-
-
+$('.borrarConsultas').click(function(){})
 
 
 

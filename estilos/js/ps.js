@@ -1,20 +1,51 @@
-let cotizacionDolar = "https://api-dolar-argentina.herokuapp.com/"
 
+ const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+ 
+ $("body").append('<button id="btn1">Obtener valor del dolar</button>');
+ 
+ $("#btn1").click(() => { 
+     $.get(URLGET, function (respuesta, estado) {
+           if(estado === "success"){
+             const cotizacionDolar = respuesta;
+             for (const dolarOficial of cotizacionDolar) {
+               console.log[0](dolarOficial.casa.venta)
+              }  
+           }
+     });
+ });
 
-const impPais = 0.30;
+ 
+const iva = 0.21;
+const impPais = 0.08;
 const percepcion = 0.35;
-let precio = $('.precioJuego').val();
-let precioConImpPais = precio * impPais
-let precioConPercepcion = precio * percepcion
+
+let precioDolar;
+
+$('#precioDolar').on('click', () => {
+  precioDolar = parseInt($('#btn1').val());
+})
+
+let precio;
+
+$('.precioJuego').on('input', () => {
+  precio = parseInt($('.precioJuego').val());
+})
 
 function precioFinal () {
-    return (precio + precioConIva + precioConImpPais + precioconPercepcion) 
+  let precioDolarizado = precio * precioDolar;
+  let precioConIva = precio * iva;
+  let precioConPercepcion = precio * percepcion;
+  let precioConImpPais = precio * impPais;
+  
+  let precioTotal = precioDolarizado + precioConIva + precioConPercepcion + precioConImpPais;
+  return (precioTotal)
+
 }
 
   let formulario = $('.formularioConsultas');
   let nombreJuego = $('.nombreJuego');
-  let precioJuego = $('.precioJuego');
-
+  let precioJuego = $('.precioJuego') 
+  
   function Consulta(nombre, precio) {
     this.nombre = nombre;
     this.precio = precio;
@@ -22,32 +53,36 @@ function precioFinal () {
 
   let listaConsulta = [];
 
-  if (localStorage.getItem('consultas')) {
-    listaConsulta = JSON.parse(localStorage.getItem('consultas'));
+  if (sessionStorage.getItem('consultas')) {
+    listaConsulta = JSON.parse(sessionStorage.getItem('consultas'));
   }
 
   function agregarAlStorage(key, consulta) {
     listaConsulta.push(consulta);
-    localStorage.setItem(key, JSON.stringify(listaConsulta));
+    sessionStorage.setItem(key, JSON.stringify(listaConsulta));
   }
 
   function obtenerConsultaDeStorage(key) {
-    if(localStorage.getItem(key)){
-      return JSON.parse(localStorage.getItem(key));
+    if(sessionStorage.getItem(key)){
+      return JSON.parse(sessionStorage.getItem(key));
     }
   }
 
   formulario.submit(function(event) {
     event.preventDefault();
+    
+    
+    let nombre =  nombreJuego.val();
+    //let precio = precioJuego.val();
 
-    let nombre = nombreJuego.val();
-    let precio = precioJuego.val();
+    const total =  precioFinal()
+    console.log(total);
+    let consulta = new Consulta(nombre, total)
+;
 
-    let consulta = new Consulta(nombre, precio);
-
-    if(!localStorage.getItem('consultas')){
+    if(!sessionStorage.getItem('consultas')){
       crearTabla('body', 'user-table');
-      crearHeader(['Nombre', 'Precio'], '#user-table');
+      crearHeader(['Nombre', 'Precio Final'], '#user-table');
     }
 
     agregarAlStorage('consultas', consulta);
@@ -56,9 +91,9 @@ function precioFinal () {
 
   });
 
-  if(localStorage.getItem('consultas')){
+  if(sessionStorage.getItem('consultas')){
     crearTabla('body', 'user-table');
-    crearHeader(['Nombre','Precio'], '#user-table');
+    crearHeader(['Nombre','Precio Final'], '#user-table');
     filas(obtenerConsultaDeStorage('consultas'), '#user-table');
   }
 
@@ -66,6 +101,13 @@ function precioFinal () {
   function crearTabla(element, nombre) {
     const table = `<table id=${nombre}></table>`;
     $(element).append(table);
+
+  $('#user-table').css({"textAlign": "center", 
+                        "fontSize": "60px",
+                        "marginTop": "40px",
+                        "marginLeft": "30%",
+                        
+                        })
   }
 
   function crearHeader(data, element) { 
@@ -106,14 +148,20 @@ $('.ocultarConsultas').click(function(){
   $("#user-table").fadeOut()
 })
 
+$('.borrarConsultas').click(function(){})
 
 
-  $("#user-table").css({"textAlign": "center", 
-                        "fontSize": "60px",
-                        "marginTop": "40px",
-                        "marginLeft": "30%",
-                        
-                        })
+
 
  
 
+
+
+
+    
+    
+
+
+  
+
+  

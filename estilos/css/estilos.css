@@ -41,3 +41,8 @@ form {
     margin-top: 10px;
     border-top: 1px solid;
 }
+
+.footer {
+    position:absolute;
+    height: 100%;
+}
