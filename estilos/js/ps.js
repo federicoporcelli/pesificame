@@ -1,29 +1,24 @@
-
- const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
- 
- $("body").append('<button id="btn1">Obtener valor del dolar</button>');
- 
- $("#btn1").click(() => { 
-     $.get(URLGET, function (respuesta, estado) {
-           if(estado === "success"){
-             const cotizacionDolar = respuesta;
-             for (const dolarOficial of cotizacionDolar) {
-               console.log[0](dolarOficial.casa.venta)
-              }  
-           }
-     });
- });
-
- 
 const iva = 0.21;
 const impPais = 0.08;
 const percepcion = 0.35;
+let dolar;
 
-let precioDolar;
+let url = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales';
 
-$('#precioDolar').on('click', () => {
-  precioDolar = parseInt($('#btn1').val());
-})
+    $.get(url, function (response, status) {
+        const apiArray = response[0];
+        const datos = Object.values(apiArray)
+        if (status === "success") {
+            for (const dato of datos) {
+              $('body').append(`<h8>La cotizacion del dolar hoy es de :${dato.venta}</h8>`)
+                .css ("marginLeft", "10px")
+                const enJson5 = JSON.stringify(datos);
+                localStorage.setItem('dolar', enJson5);
+            }
+        }
+        
+    })
+
 
 let precio;
 
@@ -32,11 +27,10 @@ $('.precioJuego').on('input', () => {
 })
 
 function precioFinal () {
-  let precioDolarizado = precio * precioDolar;
+  let precioDolarizado = precio * dolar;
   let precioConIva = precio * iva;
   let precioConPercepcion = precio * percepcion;
   let precioConImpPais = precio * impPais;
-  
   let precioTotal = precioDolarizado + precioConIva + precioConPercepcion + precioConImpPais;
   return (precioTotal)
 
@@ -148,7 +142,7 @@ $('.ocultarConsultas').click(function(){
   $("#user-table").fadeOut()
 })
 
-$('.borrarConsultas').click(function(){})
+
 
 
 
