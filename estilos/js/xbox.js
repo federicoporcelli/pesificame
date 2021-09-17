@@ -1,3 +1,5 @@
+$(document).ready(function() {
+
 const iva = 0.21;
 const impPais = 0.08;
 const percepcion = 0.35;
@@ -7,6 +9,21 @@ let precio;
 $('.precioJuego').on('input', () => {
   precio = parseInt($('.precioJuego').val());
 })
+
+function confirmar(){  
+  Swal.fire({
+      title: 'Precio final calculado!!',                
+      icon: 'success',
+      confirmButtonText: 'SIUUUUU',
+
+  }).then((result) => {
+      if (result.isConfirmed) {
+      formularioConsultas.submit();
+      }
+  })
+}
+
+
 
 function precioFinal () {
   let precioConIva = precio * iva;
@@ -43,9 +60,9 @@ function precioFinal () {
     }
   }
 
-  formulario.submit(function(event) {
-    event.preventDefault();
-    
+  formulario.submit(function(e) {
+    e.preventDefault();
+    confirmar()
     
     let nombre =  nombreJuego.val();
     //let precio = precioJuego.val();
@@ -53,6 +70,8 @@ function precioFinal () {
     const total =  precioFinal()
     console.log(total);
     let consulta = new Consulta(nombre, total)
+
+  
 ;
 
     if(!sessionStorage.getItem('consultas')){
@@ -134,15 +153,12 @@ $('.borrarConsultas').click(function(){
 
 
 
- 
+})
 
 
 
 
     
     
-
-
-  
 
   

@@ -1,3 +1,7 @@
+$(document).ready(function() {
+
+
+
 let url = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales';
 
     $.get(url, function (response, status) {
@@ -17,15 +21,12 @@ let url = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales';
 
 
 
-const datoDolar = localStorage.getItem('dolar');
-const dolar = JSON.parse(datoDolar);
-const dolarVenta = dolar[0];
+let datoDolar = localStorage.getItem('dolar');
+let dolar = JSON.parse(datoDolar);
+let dolarVenta = dolar[0];
 const iva = 0.21;
 const impPais = 0.08;
 const percepcion = 0.35;
-
-
-
 
 
 
@@ -34,6 +35,21 @@ let precio;
 $('.precioJuego').on('input', () => {
   precio = parseInt($('.precioJuego').val());
 })
+
+function confirmar(){  
+  Swal.fire({
+      title: 'Conversion de dolares a pesos realizada con exito!!',                
+      icon: 'success',
+      confirmButtonText: 'VAMOOOOO',
+
+  }).then((result) => {
+      if (result.isConfirmed) {
+      formularioConsultas.submit();
+      }
+  })
+  
+}
+
 
 function precioFinal () {
   
@@ -72,15 +88,16 @@ function obtenerConsultaDeStorage(key) {
   }
 }
 
-formulario.submit(function(event) {
-  event.preventDefault();
+$("#botonPlay").click((e) => {
+  e.preventDefault();
+  confirmar();
+
   
   
   let nombre =  nombreJuego.val();
   //let precio = precioJuego.val();
 
   const total =  precioFinal()
-  console.log(total);
   let consulta = new Consulta(nombre, total)
 ;
 
@@ -161,8 +178,7 @@ $('.borrarConsultas').click(function(){
 
 
 
-
-
+})
 
 
 
