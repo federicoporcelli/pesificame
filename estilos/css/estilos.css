@@ -42,6 +42,18 @@ form {
     border-top: 1px solid;
 }
 
+.borrarConsultas {
+    margin-left: 10px;
+    margin-top: 10px;
+    border-top: 1px solid;
+}
+
+.ocultarConsultas {
+    margin-left: 10px;
+    margin-top: 10px;
+    border-top: 1px solid;
+}
+
 .tabla {
     width: 70%;
     margin-top: 50px;
@@ -62,5 +74,43 @@ th {
     margin: 10px;
     padding: 20px;
     background: darkgrey;
+}
+
+
+footer {
+    margin-left: 10px;
+}
+
+h6 {
+    margin-left: 10px;
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 40px;
+        margin: 5px;
+    }
+
+    th {
+        font-size:30px;
+    }
+
+    td {
+        font-size: 20px;
+    }
+
+    #user-table {
+        text-align: center;
+        margin-right: 60px;
+    }
+
+    
+}
+
+
+
+@media only screen and (min-width: 577px) and (max-width: 968px) {
+
+ 
 }
 

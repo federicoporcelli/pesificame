@@ -65,7 +65,7 @@ function precioFinal () {
     confirmar()
     
     let nombre =  nombreJuego.val();
-    //let precio = precioJuego.val();
+    let precio = precioJuego.val();
 
     const total =  precioFinal()
     console.log(total);

@@ -16,7 +16,7 @@ let url = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales';
                 
             }
         }
-        
+        setTimeout(3)
     })
 
 
