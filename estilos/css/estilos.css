@@ -91,6 +91,9 @@ h6 {
         margin: 5px;
     }
 
+    label {
+        font-size: 28px;
+    }
     th {
         font-size:30px;
     }
@@ -101,7 +104,10 @@ h6 {
 
     #user-table {
         text-align: center;
-        margin-right: 60px;
+        margin: 20px auto;
+        width: 100px;
+
+
     }
 
     
