@@ -13,7 +13,7 @@ function precioFinal () {
   let precioConPercepcion = precio * percepcion;
   let precioConImpPais = precio * impPais;
   let precioTotal = precio + precioConIva + precioConPercepcion + precioConImpPais;
-  return (precioTotal)
+  return (precioTotal.toFixed(2))
 
 }
 
@@ -123,7 +123,13 @@ $('.ocultarConsultas').click(function(){
   $("#user-table").fadeOut()
 })
 
-$('.borrarConsultas').click(function(){})
+$('.borrarConsultas').click(function(){
+    localStorage.clear()
+    sessionStorage.clear()
+    location.reload()
+})
+
+
 
 
 
