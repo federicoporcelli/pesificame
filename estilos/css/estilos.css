@@ -116,19 +116,24 @@ h6 {
         font-size:30px;
     }
 
-    td {
+    #user-table1 td {
         font-size: 20px;
+        color: green;
     }
 
     #user-table1 {
         text-align: center;
         margin: 50px auto;
-        padding: 50px auto;
         width: 100px;
 
 
     }
 
+    #user-table2 td {
+        font-size: 20px;
+        color: blue;
+    }
+    
     #user-table2 {
         text-align: center;
         margin: 20px auto;
