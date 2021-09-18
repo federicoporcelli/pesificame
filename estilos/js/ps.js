@@ -16,7 +16,7 @@ let url = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales';
                 
             }
         }
-        setTimeout(3)
+        
     })
 
 
@@ -44,7 +44,7 @@ function confirmar(){
 
   }).then((result) => {
       if (result.isConfirmed) {
-      formularioConsultas.submit();
+      formularioConsultasPs.submit();
       }
   })
   
@@ -62,60 +62,60 @@ function precioFinal () {
 
 }
 
-let formulario = $('.formularioConsultas');
+let formulario = $('.formularioConsultasPs');
 let nombreJuego = $('.nombreJuego');
 let precioJuego = $('.precioJuego') 
 
-function Consulta(nombre, precio) {
+function ConsultaPs(nombre, precio) {
   this.nombre = nombre;
   this.precio = precio;
 }
 
-let listaConsulta = [];
+let listaConsultaPs = [];
 
-if (sessionStorage.getItem('consultas')) {
-  listaConsulta = JSON.parse(sessionStorage.getItem('consultas'));
+if (sessionStorage.getItem('consultasPs')) {
+  listaConsultaPs = JSON.parse(sessionStorage.getItem('consultasPs'));
 }
 
-function agregarAlStorage(key, consulta) {
-  listaConsulta.push(consulta);
-  sessionStorage.setItem(key, JSON.stringify(listaConsulta));
+function agregarAlStoragePs(key, consultaPs) {
+  listaConsultaPs.push(consultaPs);
+  sessionStorage.setItem(key, JSON.stringify(listaConsultaPs));
 }
 
-function obtenerConsultaDeStorage(key) {
+function obtenerConsultaDeStoragePs(key) {
   if(sessionStorage.getItem(key)){
     return JSON.parse(sessionStorage.getItem(key));
   }
 }
 
-$("#botonPlay").click((e) => {
+formulario.submit(function(e) {
   e.preventDefault();
-  confirmar();
+  confirmar()
 
   
   
   let nombre =  nombreJuego.val();
-  //let precio = precioJuego.val();
+  let precio = precioJuego.val();
 
   const total =  precioFinal()
-  let consulta = new Consulta(nombre, total)
+  let consultaPs = new ConsultaPs(nombre, total)
 ;
 
-  if(!sessionStorage.getItem('consultas')){
-    crearTabla('body', 'user-table');
-    crearHeader(['Nombre', 'Precio Final'], '#user-table');
+  if(!sessionStorage.getItem('consultasPs')){
+    crearTabla('body', 'user-table2');
+    crearHeader(['Nombre', 'Precio Final'], '#user-table2');
   }
 
-  agregarAlStorage('consultas', consulta);
+  agregarAlStoragePs('consultasPs', consultaPs);
 
-  crearFiladeConsulta(consulta, '#user-table');
+  crearFiladeConsultaPs(consultaPs, '#user-table2');
 
 });
 
-if(sessionStorage.getItem('consultas')){
-  crearTabla('body', 'user-table');
-  crearHeader(['Nombre','Precio Final'], '#user-table');
-  filas(obtenerConsultaDeStorage('consultas'), '#user-table');
+if(sessionStorage.getItem('consultasPs')){
+  crearTabla('body', 'user-table2');
+  crearHeader(['Nombre','Precio Final'], '#user-table2');
+  filas(obtenerConsultaDeStoragePs('consultasPs'), '#user-table2');
 }
 
 
@@ -123,7 +123,7 @@ function crearTabla(element, nombre) {
   const table = `<table id=${nombre}></table>`;
   $(element).append(table);
 
-$('#user-table').css({"textAlign": "center", 
+$('#user-table2').css({"textAlign": "center", 
                       "fontSize": "60px",
                       "marginTop": "40px",
                       "marginLeft": "30%",
@@ -140,16 +140,17 @@ function createDataHeader(data) {
   return data.map(headerData => `<th>${headerData}</th>`);
 }
 
-function crearFiladeConsulta(consulta, element){
-  const row = `<tr id=tr-${consulta.nombre}>
-    ${populateTableData(consulta.nombre, consulta.precio)}
+function crearFiladeConsultaPs(consultaPs, element){
+  const row = `<tr id=tr-${consultaPs.nombre}>
+    ${populateTableData(consultaPs.nombre, consultaPs.precio)}
   </tr>`;
   $(element).append(row);
+
 }
 
 function filas(data, element){
-  data.map(consulta => {
-      crearFiladeConsulta(consulta, element);
+  data.map(consultaPs => {
+      crearFiladeConsultaPs(consultaPs, element);
   });
 }
 
@@ -159,17 +160,20 @@ function populateTableData(nombre, precio){
   <td>${nombre} </td>
   <td>${precio}</td>
   `
+  
+    
+  
 }
 
-$('.mostrarConsultas').click(function(){
-  $("#user-table").show()
+$('.mostrarConsultasPs').click(function(){
+  $("#user-table2").show()
 })
 
-$('.ocultarConsultas').click(function(){
-$("#user-table").fadeOut()
+$('.ocultarConsultasPs').click(function(){
+$("#user-table2").fadeOut()
 })
 
-$('.borrarConsultas').click(function(){
+$('.borrarConsultasPs').click(function(){
   localStorage.clear()
   sessionStorage.clear()
   location.reload()

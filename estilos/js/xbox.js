@@ -15,10 +15,11 @@ function confirmar(){
       title: 'Precio final calculado!!',                
       icon: 'success',
       confirmButtonText: 'SIUUUUU',
+        
 
   }).then((result) => {
       if (result.isConfirmed) {
-      formularioConsultas.submit();
+        formularioConsultasXbox.submit();
       }
   })
 }
@@ -34,27 +35,27 @@ function precioFinal () {
 
 }
 
-  let formulario = $('.formularioConsultas');
+  let formulario = $('.formularioConsultasXbox');
   let nombreJuego = $('.nombreJuego');
   let precioJuego = $('.precioJuego') 
   
-  function Consulta(nombre, precio) {
+  function ConsultaXbox(nombre, precio) {
     this.nombre = nombre;
     this.precio = precio;
   }
 
-  let listaConsulta = [];
+  let listaConsultaXbox = [];
 
-  if (sessionStorage.getItem('consultas')) {
-    listaConsulta = JSON.parse(sessionStorage.getItem('consultas'));
+  if (sessionStorage.getItem('consultasxbox')) {
+    listaConsultaXbox = JSON.parse(sessionStorage.getItem('consultasXbox'));
   }
 
-  function agregarAlStorage(key, consulta) {
-    listaConsulta.push(consulta);
-    sessionStorage.setItem(key, JSON.stringify(listaConsulta));
+  function agregarAlStorageXbox(key, consultaXbox) {
+    listaConsultaXbox.push(consultaXbox);
+    sessionStorage.setItem(key, JSON.stringify(listaConsultaXbox));
   }
 
-  function obtenerConsultaDeStorage(key) {
+  function obtenerConsultaDeStorageXbox(key) {
     if(sessionStorage.getItem(key)){
       return JSON.parse(sessionStorage.getItem(key));
     }
@@ -63,32 +64,34 @@ function precioFinal () {
   formulario.submit(function(e) {
     e.preventDefault();
     confirmar()
+
+    
     
     let nombre =  nombreJuego.val();
     let precio = precioJuego.val();
 
     const total =  precioFinal()
     console.log(total);
-    let consulta = new Consulta(nombre, total)
+    let consultaXbox = new ConsultaXbox(nombre, total)
 
   
 ;
 
-    if(!sessionStorage.getItem('consultas')){
-      crearTabla('body', 'user-table');
-      crearHeader(['Nombre', 'Precio Final'], '#user-table');
+    if(!sessionStorage.getItem('consultasXbox')){
+      crearTabla('body', 'user-table1');
+      crearHeader(['Nombre', 'Precio Final'], '#user-table1');
     }
 
-    agregarAlStorage('consultas', consulta);
+    agregarAlStorageXbox('consultasXbox', consultaXbox);
 
-    crearFiladeConsulta(consulta, '#user-table');
+    crearFiladeConsultaXbox(consultaXbox, '#user-table1');
 
   });
 
-  if(sessionStorage.getItem('consultas')){
-    crearTabla('body', 'user-table');
-    crearHeader(['Nombre','Precio Final'], '#user-table');
-    filas(obtenerConsultaDeStorage('consultas'), '#user-table');
+  if(sessionStorage.getItem('consultasXbox')){
+    crearTabla('body', 'user-table1');
+    crearHeader(['Nombre','Precio Final'], '#user-table1');
+    filas(obtenerConsultaDeStorageXbox('consultasXbox'), '#user-table1');
   }
 
 
@@ -96,12 +99,15 @@ function precioFinal () {
     const table = `<table id=${nombre}></table>`;
     $(element).append(table);
 
-  $('#user-table').css({"textAlign": "center", 
+  $('#user-table1').css({"textAlign": "center", 
                         "fontSize": "60px",
                         "marginTop": "40px",
                         "marginLeft": "30%",
                         
+                        
+                        
                         })
+  
   }
 
   function crearHeader(data, element) { 
@@ -113,16 +119,17 @@ function precioFinal () {
     return data.map(headerData => `<th>${headerData}</th>`);
   }
 
-  function crearFiladeConsulta(consulta, element){
-    const row = `<tr id=tr-${consulta.nombre}>
-      ${populateTableData(consulta.nombre, consulta.precio)}
+  function crearFiladeConsultaXbox(consultaXbox, element){
+    const row = `<tr id=tr-${consultaXbox.nombre}>
+      ${populateTableData(consultaXbox.nombre, consultaXbox.precio)}
     </tr>`;
     $(element).append(row);
+    
   }
 
   function filas(data, element){
-    data.map(consulta => {
-        crearFiladeConsulta(consulta, element);
+    data.map(consultaXbox => {
+        crearFiladeConsultaXbox(consultaXbox, element);
     });
   }
 
@@ -132,17 +139,19 @@ function precioFinal () {
     <td>${nombre} </td>
     <td>${precio}</td>
     `
+
+    
   }
 
-  $('.mostrarConsultas').click(function(){
-    $("#user-table").show()
+  $('.mostrarConsultasXbox').click(function(){
+    $("#user-table1").show()
 })
 
-$('.ocultarConsultas').click(function(){
-  $("#user-table").fadeOut()
+$('.ocultarConsultasXbox').click(function(){
+  $("#user-table1").fadeOut()
 })
 
-$('.borrarConsultas').click(function(){
+$('.borrarConsultasXbox').click(function(){
     localStorage.clear()
     sessionStorage.clear()
     location.reload()
