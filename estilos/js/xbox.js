@@ -12,17 +12,15 @@ $('.precioJuego').on('input', () => {
 
 function confirmar(){  
   Swal.fire({
-      title: 'Precio final calculado!!',                
-      icon: 'success',
-      confirmButtonText: 'SIUUUUU',
-        
-
-  }).then((result) => {
-      if (result.isConfirmed) {
-        formularioConsultasXbox.submit();
-      }
+    position: 'center',
+    icon: 'success',
+    title: 'Tu consulta fue procesada!!',
+    showConfirmButton: false,
+    timer: 1500,
   })
 }
+
+  
 
 
 
@@ -86,6 +84,8 @@ function precioFinal () {
 
     crearFiladeConsultaXbox(consultaXbox, '#user-table1');
 
+
+    $(".botonConsultaXbox").trigger("reset");
   });
 
   if(sessionStorage.getItem('consultasXbox')){

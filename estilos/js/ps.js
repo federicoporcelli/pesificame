@@ -38,16 +38,12 @@ $('.precioJuego').on('input', () => {
 
 function confirmar(){  
   Swal.fire({
-      title: 'Conversion de dolares a pesos realizada con exito!!',                
-      icon: 'success',
-      confirmButtonText: 'VAMOOOOO',
-
-  }).then((result) => {
-      if (result.isConfirmed) {
-      formularioConsultasPs.submit();
-      }
+    position: 'center',
+    icon: 'success',
+    title: 'Tu compra fue convertida!!',
+    showConfirmButton: false,
+    timer: 1500,
   })
-  
 }
 
 
@@ -90,7 +86,7 @@ function obtenerConsultaDeStoragePs(key) {
 
 formulario.submit(function(e) {
   e.preventDefault();
-  confirmar()
+  confirmar() 
 
   
   
